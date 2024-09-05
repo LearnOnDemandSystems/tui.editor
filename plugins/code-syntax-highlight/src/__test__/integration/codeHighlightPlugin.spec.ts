@@ -78,4 +78,41 @@ describe('codeSyntaxHighlightPlugin', () => {
 
     expect(previewHTML).toMatchSnapshot();
   });
+
+  it('should render custom attributes in wysiwyg', () => {
+    editor.destroy();
+    document.body.removeChild(container);
+
+    container = document.createElement('div');
+    editor = new Editor({
+      el: container,
+      previewStyle: 'vertical',
+      initialValue,
+      plugins: [
+        [
+          codeSyntaxHighlightPlugin,
+          {
+            highlighter: Prism,
+            customAttributes: {
+              pre: { spellcheck: 'false' },
+              code: { spellcheck: 'false' },
+            },
+          },
+        ],
+      ],
+    });
+
+    const elements = editor.getEditorElements();
+
+    mdPreview = elements.mdPreview!;
+    wwEditor = elements.wwEditor!;
+
+    document.body.appendChild(container);
+
+    editor.changeMode('wysiwyg');
+
+    const wwEditorHTML = getWwEditorHTML();
+
+    expect(wwEditorHTML).toMatchSnapshot();
+  });
 });
