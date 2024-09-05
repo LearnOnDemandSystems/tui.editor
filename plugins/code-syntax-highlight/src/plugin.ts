@@ -13,7 +13,7 @@ export function codeSyntaxHighlightPlugin(
 ): PluginInfo {
   if (options) {
     const { eventEmitter } = context;
-    const { highlighter: prism } = options;
+    const { highlighter: prism, customAttributes } = options;
 
     eventEmitter.addEventType('showCodeBlockLanguages');
     eventEmitter.addEventType('selectLanguage');
@@ -28,7 +28,7 @@ export function codeSyntaxHighlightPlugin(
       toHTMLRenderers: getHTMLRenderers(prism!),
       wysiwygPlugins: [() => codeSyntaxHighlighting(context, prism!)],
       wysiwygNodeViews: {
-        codeBlock: createCodeSyntaxHighlightView(registerdlanguages),
+        codeBlock: createCodeSyntaxHighlightView(registerdlanguages, customAttributes),
       },
     };
   }
