@@ -7,6 +7,7 @@ import addClass from 'tui-code-snippet/domUtil/addClass';
 import { cls } from '@/utils/dom';
 import { LanguageSelectBox } from '@/nodeViews/languageSelectBox';
 import type { Emitter } from '@toast-ui/editor';
+import { CustomAttributes } from '@t/index';
 
 type GetPos = (() => number) | boolean;
 
@@ -35,7 +36,8 @@ class CodeSyntaxHighlightView implements NodeView {
     private view: EditorView,
     private getPos: GetPos,
     private eventEmitter: Emitter,
-    private languages: string[]
+    private languages: string[],
+    private customAttributes?: CustomAttributes
   ) {
     this.node = node;
     this.view = view;
@@ -43,6 +45,7 @@ class CodeSyntaxHighlightView implements NodeView {
     this.eventEmitter = eventEmitter;
     this.languageEditing = false;
     this.languages = languages;
+    this.customAttributes = customAttributes;
 
     this.createElement();
     this.bindDOMEvent();
@@ -70,6 +73,14 @@ class CodeSyntaxHighlightView implements NodeView {
     this.contentDOM = code;
   }
 
+  private setAttributes(element: HTMLElement, attributes: Record<string, string>) {
+    Object.keys(attributes).forEach((attribute: string) => {
+      if (attributes?.[attribute]) {
+        element.setAttribute(attribute, attributes?.[attribute]);
+      }
+    });
+  }
+
   private createCodeBlockElement() {
     const pre = document.createElement('pre');
     const code = document.createElement('code');
@@ -85,6 +96,14 @@ class CodeSyntaxHighlightView implements NodeView {
         pre.setAttribute(attrName, attrs[attrName]);
       }
     });
+
+    if (this.customAttributes?.pre) {
+      this.setAttributes(pre, this.customAttributes.pre);
+    }
+
+    if (this.customAttributes?.code) {
+      this.setAttributes(code, this.customAttributes.code);
+    }
 
     pre.appendChild(code);
 
@@ -189,7 +208,10 @@ class CodeSyntaxHighlightView implements NodeView {
   }
 }
 
-export function createCodeSyntaxHighlightView(languages: string[]) {
+export function createCodeSyntaxHighlightView(
+  languages: string[],
+  customAttributes?: CustomAttributes
+) {
   return (node: ProsemirrorNode, view: EditorView, getPos: GetPos, emitter: Emitter) =>
-    new CodeSyntaxHighlightView(node, view, getPos, emitter, languages);
+    new CodeSyntaxHighlightView(node, view, getPos, emitter, languages, customAttributes);
 }

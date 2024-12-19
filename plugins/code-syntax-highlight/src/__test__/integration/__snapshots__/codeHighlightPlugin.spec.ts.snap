@@ -81,3 +81,46 @@ exports[`codeSyntaxHighlightPlugin should render highlighted codeblock element i
   </pre>
 </div>
 `;
+
+exports[`codeSyntaxHighlightPlugin should render custom attributes in wysiwyg 1`] = `
+<div data-language="yaml"
+     class="toastui-editor-ww-code-block-highlighting"
+>
+  <pre spellcheck="false"
+       class="language-yaml"
+  >
+    <code data-language="yaml"
+          spellcheck="false"
+          class="language-yaml"
+    >
+      <span class="token key atrule">
+        martin
+      </span>
+      <span class="token punctuation">
+        :
+      </span>
+      <span class="token key atrule">
+        name
+      </span>
+      <span class="token punctuation">
+        :
+      </span>
+      Martin D'vloper
+      <span class="token key atrule">
+        job
+      </span>
+      <span class="token punctuation">
+        :
+      </span>
+      Developer
+      <span class="token key atrule">
+        skill
+      </span>
+      <span class="token punctuation">
+        :
+      </span>
+      Elite
+    </code>
+  </pre>
+</div>
+`;
