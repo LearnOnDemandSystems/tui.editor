@@ -22,8 +22,29 @@ export function unwrapWidgetSyntax(text: string) {
   return text;
 }
 
-export function createWidgetContent(info: string, text: string) {
-  return `$$${info} ${text}$$`;
+/**
+ * Creates a widget string safe for insertion into TUI Editor.
+ *
+ * TUI Editor wraps widgets with `$$`, and its parser (ToastMark) treats
+ * `$$` as a special delimiter. If the widget content itself contains `$$`,
+ * ToastMark may incorrectly interpret it as the end of the widget block,
+ * breaking rendering or WYSIWYG behavior.
+ *
+ * This function inserts a zero-width space (`\u200B`) between any `$` characters
+ * that form a `$$` sequence inside the widget content. This prevents the
+ * parser from prematurely closing the widget while remaining invisible to
+ * users in the editor. The resulting string is safe to insert into the editor
+ * and will render correctly in WYSIWYG mode.
+ *
+ * @param info - Metadata or identifier for the widget (e.g., type or ID)
+ * @param content - The raw text content of the widget, which may include `$$`
+ * @returns A string representing the widget, wrapped in `$$` with internal
+ *          `$` sequences made parser-safe
+ */
+export function createWidgetContent(info: string, content: string) {
+  const safeContent = content.replaceAll('$$', `$${'\u200B'}$`);
+
+  return `$$${info} ${safeContent}$$`;
 }
 
 export function widgetToDOM(info: string, text: string) {
