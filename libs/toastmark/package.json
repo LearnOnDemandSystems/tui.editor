@@ -9,7 +9,8 @@
     "test:ci": "jest",
     "serve": "snowpack dev",
     "serve:ie": "webpack serve",
-    "build": "rollup -c && webpack build"
+    "build": "rollup -c && webpack build",
+    "prepare": "rollup -c"
   },
   "types": "types/index.d.ts",
   "files": [
@@ -25,10 +26,17 @@
   "module": "dist/esm/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@types/codemirror": "5.60.5",
     "@types/mdurl": "^1.0.2",
     "codemirror": "^5.51.0",
     "entities": "^2.0.0",
-    "mdurl": "^1.0.1"
+    "mdurl": "^1.0.1",
+    "rollup": "^2.52.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
   }
 }

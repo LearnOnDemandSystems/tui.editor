@@ -1,9 +1,15 @@
 import typescript from '@rollup/plugin-typescript';
+import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import banner from 'rollup-plugin-banner';
+import postcss from 'rollup-plugin-postcss';
 import { version, author, license } from './package.json';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 function i18nEditorImportPath() {
   return {
@@ -28,6 +34,27 @@ function createBannerPlugin(type) {
 }
 
 export default [
+  // CSS extraction — produces dist/toastui-editor.css from webpack-style CSS entry
+  {
+    input: 'src/css-entry.js',
+    output: {
+      dir: 'dist',
+      entryFileNames: '_css-entry.js',
+      format: 'es',
+      sourcemap: false,
+    },
+    plugins: [
+      alias({
+        entries: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+      }),
+      nodeResolve(),
+      commonjs(),
+      postcss({
+        extract: path.resolve(__dirname, 'dist/toastui-editor.css'),
+        minimize: false,
+      }),
+    ],
+  },
   // editor
   {
     input: 'src/esm/index.ts',
