@@ -14,10 +14,18 @@
     "highlight"
   ],
   "main": "dist/toastui-editor-plugin-code-syntax-highlight.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/toastui-editor-plugin-code-syntax-highlight.js"
+    }
+  },
   "types": "types/index.d.ts",
   "files": [
     "dist/*.js",
     "dist/*.css",
+    "dist/esm",
     "types/index.d.ts"
   ],
   "author": "NHN Cloud FE Development Lab <dl_javascript@nhn.com>",
@@ -43,11 +51,21 @@
     "build:all": "webpack build --env all",
     "build:cdn": "webpack build --env cdn & webpack build --env cdn minify",
     "build:cdn-all": "webpack build --env cdn all & webpack build --env cdn all minify",
-    "build": "webpack build && npm run build:cdn && npm run build:cdn-all && npm run build:all"
+    "build:esm": "rollup -c",
+    "build": "webpack build && npm run build:cdn && npm run build:cdn-all && npm run build:all",
+    "prepare": "rollup -c"
   },
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.0",
+    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@types/prismjs": "^1.16.3",
-    "cross-env": "^6.0.3"
+    "cross-env": "^6.0.3",
+    "rollup": "^2.52.0",
+    "rollup-plugin-postcss": "^4.0.0",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "prismjs": "^1.23.0"
