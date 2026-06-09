@@ -19,7 +19,8 @@
     ".": {
       "import": "./dist/esm/index.js",
       "require": "./dist/toastui-editor-plugin-code-syntax-highlight.js"
-    }
+    },
+    "./dist/toastui-editor-plugin-code-syntax-highlight.css": "./dist/toastui-editor-plugin-code-syntax-highlight.css"
   },
   "types": "types/index.d.ts",
   "files": [
