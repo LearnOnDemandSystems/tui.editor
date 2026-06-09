@@ -92,7 +92,7 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@toast-ui/toastmark": "github:LearnOnDemandSystems/tui.editor#feat/esm-build-artifacts&path:/libs/toastmark",
+    "@toast-ui/toastmark": "github:LearnOnDemandSystems/tui.editor#main&path:/libs/toastmark",
     "dompurify": "^2.3.3",
     "prosemirror-commands": "^1.1.9",
     "prosemirror-history": "^1.1.3",
