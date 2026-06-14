@@ -94,6 +94,7 @@
   "dependencies": {
     "@toast-ui/toastmark": "github:LearnOnDemandSystems/tui.editor#main&path:/libs/toastmark",
     "dompurify": "^2.3.3",
+    "resize-observer-polyfill": "^1.5.1",
     "prosemirror-commands": "^1.1.9",
     "prosemirror-history": "^1.1.3",
     "prosemirror-inputrules": "^1.1.3",
