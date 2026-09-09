@@ -86,8 +86,9 @@ const schemaFactory = {
         const { dom, htmlAttrs } = sanitizeDOM(node, typeName, sanitizeHTML, wwToDOMAdaptor);
 
         htmlAttrs.class = htmlAttrs.class ? `${htmlAttrs.class} html-block` : 'html-block';
+        dom.setAttribute('class', htmlAttrs.class);
 
-        return [typeName, htmlAttrs, ...toArray(dom.childNodes)];
+        return dom;
       },
     };
   },
