@@ -88,11 +88,6 @@ const schemaFactory = {
         htmlAttrs.class = htmlAttrs.class ? `${htmlAttrs.class} html-block` : 'html-block';
         dom.setAttribute('class', htmlAttrs.class);
 
-        // Return the sanitized element itself instead of a `[tag, attrs, ...childNodes]` spec.
-        // `DOMSerializer.renderSpec` only accepts element nodes (`nodeType === 1`) as entries of
-        // a spec array, so spreading the sanitized child nodes throws
-        // `RangeError: Invalid array passed to renderSpec` as soon as any child is a text or
-        // comment node
         return dom;
       },
     };
