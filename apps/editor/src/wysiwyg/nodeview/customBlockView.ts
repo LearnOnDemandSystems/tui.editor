@@ -10,7 +10,7 @@ import { ToDOMAdaptor } from '@t/convertor';
 import { createTextSelection } from '@/helper/manipulation';
 import { cls } from '@/utils/dom';
 
-type GetPos = (() => number) | boolean;
+type GetPos = (() => number | undefined) | boolean;
 
 export class CustomBlockView implements NodeView {
   dom: HTMLElement;
@@ -187,9 +187,11 @@ export class CustomBlockView implements NodeView {
 
     this.innerEditorView!.updateState(state);
 
-    if (!this.canceled && isFunction(this.getPos)) {
+    const pos = !this.canceled && isFunction(this.getPos) ? this.getPos() : undefined;
+
+    if (pos !== undefined) {
       const outerTr = this.editorView.state.tr;
-      const offsetMap = StepMap.offset(this.getPos() + 1);
+      const offsetMap = StepMap.offset(pos + 1);
 
       for (let i = 0; i < transactions.length; i += 1) {
         const { steps } = transactions[i];

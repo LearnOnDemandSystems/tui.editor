@@ -9,7 +9,7 @@ import { getCustomAttrs } from '@/wysiwyg/helper/node';
 
 import { Emitter } from '@t/event';
 
-type GetPos = (() => number) | boolean;
+type GetPos = (() => number | undefined) | boolean;
 
 type InputPos = {
   top: number;
@@ -129,7 +129,13 @@ export class CodeBlockView implements NodeView {
 
     // judge to click pseudo element with background image for IE11
     if (style.backgroundImage !== 'none' && isFunction(this.getPos)) {
-      const { top, right } = this.view.coordsAtPos(this.getPos());
+      const pos = this.getPos();
+
+      if (pos === undefined) {
+        return;
+      }
+
+      const { top, right } = this.view.coordsAtPos(pos);
 
       this.createLanguageEditor({ top, right });
     }
@@ -149,6 +155,11 @@ export class CodeBlockView implements NodeView {
       this.reset();
 
       const pos = this.getPos();
+
+      if (pos === undefined) {
+        return;
+      }
+
       const { tr } = this.view.state;
 
       tr.setNodeMarkup(pos, null, { language: value });
