@@ -64,7 +64,7 @@ export default [
       sourcemap: false,
     },
     plugins: [typescript(), commonjs(), nodeResolve(), createBannerPlugin()],
-    external: [/^prosemirror/],
+    external: [/^prosemirror/, /^dompurify/],
   },
   // viewer
   {
@@ -75,7 +75,7 @@ export default [
       sourcemap: false,
     },
     plugins: [typescript(), commonjs(), nodeResolve(), createBannerPlugin('viewer')],
-    external: [/^prosemirror/],
+    external: [/^prosemirror/, /^dompurify/],
   },
   // i18n
   {

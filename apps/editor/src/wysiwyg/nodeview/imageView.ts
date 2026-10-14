@@ -10,7 +10,7 @@ import { getCustomAttrs } from '@/wysiwyg/helper/node';
 
 import { Emitter } from '@t/event';
 
-type GetPos = (() => number) | boolean;
+type GetPos = (() => number | undefined) | boolean;
 
 const IMAGE_LINK_CLASS_NAME = 'image-link';
 
@@ -88,9 +88,10 @@ export class ImageView implements NodeView {
 
       ev.stopPropagation();
 
-      if (isPositionInBox(style, offsetX, offsetY)) {
+      const pos = this.getPos();
+
+      if (pos !== undefined && isPositionInBox(style, offsetX, offsetY)) {
         const { tr } = this.view.state;
-        const pos = this.getPos();
 
         tr.setSelection(createTextSelection(tr, pos, pos + 1));
         this.view.dispatch(tr);
